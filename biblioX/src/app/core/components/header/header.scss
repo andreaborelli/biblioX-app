@@ -1,0 +1,29 @@
+@use '../../../../styles/variables' as *;
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: $color-primary;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+
+  &.sticky {
+    background-color: $color-primary-transparent;
+
+    .slogan-text {
+      color: $color-secondary;
+    }
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+}

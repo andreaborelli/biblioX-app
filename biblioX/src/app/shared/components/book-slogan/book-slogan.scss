@@ -1,0 +1,28 @@
+@use '../../../../styles/variables' as *;
+
+.slogan-text {
+  font-family: 'Rock Salt', cursive;
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1.4;
+  // transform: rotate(-5deg) translateY(-10px);
+  // color: #F72585;
+}
+
+@media screen and (max-width: 480px) {
+  .slogan-text {
+    font-size: 12px;
+    padding-left: 10px;
+  }
+
+  .mobile-br {
+    display: inline;
+  }
+}
+
+/* Hides the <br> tag on screens wider than 600px */
+@media screen and (min-width: 481px) {
+  .mobile-br {
+    display: none;
+  }
+}
