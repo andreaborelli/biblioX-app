@@ -1,0 +1,23 @@
+<ng-container *ngIf="books.length === 0">
+
+  <bx-book-message></bx-book-message>
+
+</ng-container>
+
+<ng-container class="results-container" style="display: none;" *ngIf="books.length > 0">
+  <div class="results-header">
+    <h2>{{ searchResultsTitle }}</h2>
+    <div class="sort-options">
+      <label for="sort-by">Sort by:</label>
+      <select id="sort-by" [(ngModel)]="sortBy" (change)="onSortChange()">
+        <option value="relevance">Relevance</option>
+        <option value="newest">Newest</option>
+      </select>
+    </div>
+  </div>
+  <div class="book-list-grid">
+    <!-- The search results will be dynamically displayed here -->
+    <bx-book-card *ngFor="let book of books" [book]="book"></bx-book-card>
+
+  </div>
+</ng-container>

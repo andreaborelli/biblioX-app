@@ -1,0 +1,105 @@
+@use '../../../../styles/variables' as *;
+
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+
+    .custom-modal {
+        background: $color-surface;
+        padding: 1rem;
+        border-radius: 6px;
+        width: 90%;
+        max-width: 500px;
+        max-height: 90vh; // Prevents modal from overflowing the screen
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.3s ease-in-out;
+        overflow: hidden; // previene overflow visivo
+    }
+
+    .custom-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    .custom-modal-body {
+        margin-top: 1rem;
+        overflow-y: auto; // Vertical scroll
+        flex-grow: 1; // Fills the available space
+
+        img {
+            width: 100px;
+            float: left;
+            margin-right: 1rem;
+        }
+
+        p {
+            margin: 0.5rem 0;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: $transition;
+            font-weight: 500;
+        }
+    }
+
+    .button-buy {
+        padding: 10px 30px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: $transition;
+        font-weight: 500;
+        background-color: $color-primary;
+        color: $color-surface;
+    }
+
+    .button-content {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        margin-top: 1rem;
+    }
+
+    .material-icons-outlined {
+        font-size: 24px;
+    }
+
+    .close-button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

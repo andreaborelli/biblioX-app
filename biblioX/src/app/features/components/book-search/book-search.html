@@ -1,8 +1,8 @@
 <div class="search-container">
-    <form class="search-form">
+    <form class="search-form" (submit)="triggerSearch(); $event.preventDefault()">
 
-        <input type="text"
-            placeholder="Search books by title, author, or topic..."
+        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="onQueryChange($event)"
+            placeholder="Search books by title, author, or topic..." (keydown.enter)="triggerSearch()"
             name="searchInput" required>
 
         <button type="submit">
@@ -13,17 +13,17 @@
 
     <div class="filters">
         <div class="filter-item">
-            <input type="checkbox" id="filter-ebooks"
+            <input type="checkbox" id="filter-ebooks" [(ngModel)]="onlyEbooks" (change)="onFiltersChange()"
                 name="ebooks">
             <label for="filter-ebooks">Ebooks</label>
         </div>
         <div class="filter-item">
-            <input type="checkbox" id="filter-free"  name="free">
+            <input type="checkbox" id="filter-free" [(ngModel)]="onlyFree" (change)="onFiltersChange()" name="free">
             <label for="filter-free">Free</label>
         </div>
         <div class="filter-item">
             <label for="filter-lang">Language:</label>
-            <select id="filter-lang"  name="language">
+            <select id="filter-lang" [(ngModel)]="language" (change)="onFiltersChange()" name="language">
                 <option value="">All</option>
                 <option value="it">Italian</option>
                 <option value="en">English</option>

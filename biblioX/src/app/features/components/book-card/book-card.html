@@ -1,0 +1,10 @@
+<div class="book-card" (click)="showDetails(book)">
+    <img class="book-image" [src]="book.volumeInfo.imageLinks?.thumbnail || 'assets/default-book.png'" alt="Cover" />
+    <div class="book-info">
+        <h3 class="book-title">{{ book.volumeInfo.title }}</h3>
+        <p class="book-author"><strong>Authors:</strong> {{ book.volumeInfo.authors?.join(', ') }}</p>
+        <p><strong>Publisher:</strong> {{ book.volumeInfo.publisher }}</p>
+        <p><strong>Published:</strong> {{ book.volumeInfo.publishedDate }}</p>
+    </div>
+</div>
+<bx-book-details [book]="selectedBook" [visible]="isModalVisible"></bx-book-details>

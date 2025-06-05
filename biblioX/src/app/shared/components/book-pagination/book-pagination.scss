@@ -1,0 +1,41 @@
+@use '../../../../styles/variables' as *;
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 16px;
+    padding: 20px 0;
+
+    button {
+        width: 40px;
+        height: 40px;
+        border: 1px solid $color-border;
+        background-color: $color-surface;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: $transition;
+
+        &.active {
+            background-color: $color-primary;
+            color: $color-surface;
+            border-color: $color-primary;
+        }
+
+        &:hover:not(.active) {
+            background-color: $color-secondary
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .pagination {
+        gap: 5px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    button {
+        padding: 0 12px;
+    }
+}

@@ -1,0 +1,15 @@
+@use '../../../../styles/variables' as *;
+
+.book-message {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 80px;
+}
+
+@media screen and (max-width: 600px) {
+
+  .book-message {
+    font-size: 18px;
+  }
+
+}

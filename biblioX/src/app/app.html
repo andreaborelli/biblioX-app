@@ -1,15 +1,26 @@
 <div class="layout-container">
-
-  <bx-header></bx-header>
+  <bx-header (resetApp)="resetApp()"></bx-header>
 
   <main class="main-content">
 
-    <bx-book-search></bx-book-search>
+    <bx-book-search [(searchQuery)]="searchQuery" (onSearch)="onSearch()" (resetApp)="resetApp()"
+      (filtersChanged)="onFiltersChanged($event)">
+    </bx-book-search>
 
+
+    <bx-book-list [books]="books" [searchResultsTitle]="searchResultsTitle" (sortByChange)="onSortChanged($event)">
+    </bx-book-list>
+
+
+    <ng-container *ngIf="books.length > 0">
+      <bx-book-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="fetchBooks($event)">
+      </bx-book-pagination>
+    </ng-container>
   </main>
 
   <bx-footer></bx-footer>
-
 </div>
 
-<router-outlet />
+
+<bx-back-to-top></bx-back-to-top>
+<router-outlet></router-outlet>

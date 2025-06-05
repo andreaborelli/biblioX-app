@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Book } from '../models/book';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Book } from '../models/book';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +11,10 @@ export class BookService {
   private API_URL = 'https://www.googleapis.com/books/v1/volumes';
 
   private books: Book[] = [];
- 
-    constructor(private http: HttpClient) { }
 
-    searchBooks(query: string, sortBy: 'relevance' | 'newest' = 'relevance'): Observable<any> {
+  constructor(private http: HttpClient) { }
+
+  searchBooks(query: string, sortBy: 'relevance' | 'newest' = 'relevance'): Observable<any> {
     const url = `${this.API_URL}?q=${encodeURIComponent(query)}&orderBy=${sortBy}&maxResults=20`;
     return this.http.get(url);
   }

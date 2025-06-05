@@ -1,0 +1,22 @@
+<div class="custom-modal-overlay" *ngIf="visible" (click)="close()">
+  <div class="custom-modal">
+    <div class="custom-modal-header">
+      <h2>{{ book.volumeInfo.title }}</h2>
+      <button class="close-button" (click)="close()"><span class="material-icons-outlined">close</span></button>
+    </div>
+    <div class="custom-modal-body" *ngIf="book">
+      <img [src]="book.volumeInfo.imageLinks?.thumbnail || 'assets/default-book.png'" alt="cover" />
+      <p><strong>Authors:</strong> {{ book.volumeInfo.authors?.join(', ') }}</p>
+      <p><strong>Publisher:</strong> {{ book.volumeInfo.publisher }}</p>
+      <p><strong>Published:</strong> {{ book.volumeInfo.publishedDate }}</p>
+      <p class="book-description" *ngIf="book.volumeInfo.description"><strong>Description:</strong> {{
+        book.volumeInfo.description | safeDescription | truncate:400 }}</p>
+    </div>
+    <div class="button-content">
+      <button class="button-buy" *ngIf="book.volumeInfo.infoLink" (click)="openBookInfo(book.volumeInfo.infoLink)">
+        More Info
+      </button>
+    </div>
+
+  </div>
+</div>

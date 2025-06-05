@@ -1,9 +1,9 @@
 <header [class.sticky]="isSticky">
   <div class="header-content">
 
-    <bx-book-logo></bx-book-logo>
+    <bx-book-logo (click)="triggerReset()"></bx-book-logo>
 
-    <bx-book-slogan></bx-book-slogan>
+    <bx-book-slogan class="slogan-text" [text]="sloganText"></bx-book-slogan>
 
   </div>
 </header>
