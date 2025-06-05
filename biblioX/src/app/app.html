@@ -7,6 +7,7 @@
       (filtersChanged)="onFiltersChanged($event)">
     </bx-book-search>
 
+    <bx-spinner *ngIf="isLoading"></bx-spinner>
 
     <bx-book-list [books]="books" [searchResultsTitle]="searchResultsTitle" (sortByChange)="onSortChanged($event)">
     </bx-book-list>

@@ -1,4 +1,4 @@
-import { Component, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { BookService } from './services/book-service';
@@ -9,6 +9,7 @@ import { BookList } from './features/components/book-list/book-list';
 import { BookPagination } from './shared/components/book-pagination/book-pagination';
 import { Footer } from './core/components/footer/footer';
 import { BackToTop } from './core/components/back-to-top/back-to-top';
+import { Spinner } from './core/components/spinner/spinner';
 
 
 
@@ -24,6 +25,7 @@ import { BackToTop } from './core/components/back-to-top/back-to-top';
     BookPagination,
     Footer,
     BackToTop,
+    Spinner
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -32,7 +34,7 @@ export class App {
 
   @ViewChild(BookSearch) bookSearch!: BookSearch;
 
-  
+
   title: string = '';
   books: any[] = [];
   searchQuery: string = '';
@@ -56,7 +58,7 @@ export class App {
   onFiltersChanged(newFilters: { ebooks: boolean; free: boolean; lang: string }) {
     this.filters = newFilters;
     if (this.searchQuery.trim()) {
-      this.onSearch(); // automatic search
+      this.onSearch(); // Trigger search with new filters
     }
 
   }
@@ -64,7 +66,8 @@ export class App {
     private bookService: BookService,
     private router: Router,
     private http: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -93,32 +96,37 @@ export class App {
   }
 
   onSortChanged(newSort: string) {
+    this.isLoading = true; // Start loading
     this.sortBy = newSort as 'relevance' | 'newest'; // cast to the correct type
-    this.searchBooks();
+    this.fetchBooks(this.currentPage);  // Search based on current filters
   }
+
 
   searchBooks() {
-    this.bookService.searchBooks(this.searchQuery, this.sortBy).subscribe(response => {
-      this.books = response.items || [];
-
+    this.isLoading = true; // start loading
+    this.bookService.searchBooks(this.searchQuery, this.sortBy).subscribe({
+      next: (response) => {
+        this.books = response.items || [];
+      },
+      error: (err) => {
+        console.error('Errore nella ricerca dei libri:', err);
+      },
+      complete: () => {
+        this.isLoading = false; // end loading
+      }
     });
+    this.bookSearch.resetFilters();
   }
+
   fetchBooks(page: number): void {
-    this.isLoading = true; // Start loading
+    this.isLoading = true;
+    this.cdr.detectChanges(); // // Force DOM update
+
     const startIndex = (page - 1) * this.maxResult;
     let query = `q=${encodeURIComponent(this.searchQuery)}&startIndex=${startIndex}&maxResults=${this.maxResult}`;
-
-    if (this.filters.ebooks) {
-      query += `&filter=ebooks`;
-    }
-
-    if (this.filters.free) {
-      query += `&filter=free-ebooks`;
-    }
-
-    if (this.filters.lang) {
-      query += `&langRestrict=${this.filters.lang}`;
-    }
+    if (this.filters.ebooks) query += `&filter=ebooks`;
+    if (this.filters.free) query += `&filter=free-ebooks`;
+    if (this.filters.lang) query += `&langRestrict=${this.filters.lang}`;
 
     this.http.get(`https://www.googleapis.com/books/v1/volumes?${query}`)
       .subscribe({
@@ -127,7 +135,6 @@ export class App {
           this.totalItems = Math.min(response.totalItems || 0, 1000);
           this.totalPages = Math.ceil(this.totalItems / this.maxResult);
           this.currentPage = page;
-
           localStorage.setItem('books', JSON.stringify(this.books));
           localStorage.setItem('searchQuery', this.searchQuery);
           localStorage.setItem('currentPage', this.currentPage.toString());
@@ -137,10 +144,12 @@ export class App {
           console.error('Errore durante il caricamento dei libri:', err);
         },
         complete: () => {
-          this.isLoading = false; // End of loading
+          this.isLoading = false;
+          this.cdr.detectChanges(); //// Force DOM update
         }
       });
   }
+
 
   resetApp(): void {
     this.searchQuery = '';
@@ -152,6 +161,6 @@ export class App {
     this.router.navigate(['/']);
     this.bookSearch.resetFilters();
   }
- 
+
 
 }
