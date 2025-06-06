@@ -17,7 +17,10 @@ export class Header {
 
   @Input() title: string = 'BiblioX';
 
-  sloganText: string =  `<em>"Scopri. Leggi. Cresci."</em><br><em>"Tutti i libri che cerchi, <br class='mobile-br'> in un solo posto"</em>`;
+  sloganText: string = `
+  <em>"Discover. Read. Grow."</em><br>
+  <em>"All the books you seek, in one place"</em>
+`;
 
   @Output() resetApp = new EventEmitter<void>();
 
@@ -26,7 +29,7 @@ export class Header {
   }
 
   @HostListener('window:scroll', [])
-    onWindowScroll() {
-      this.isSticky = window.pageYOffset > 50;
-    }
+  onWindowScroll() {
+    this.isSticky = window.pageYOffset > 50;
+  }
 }

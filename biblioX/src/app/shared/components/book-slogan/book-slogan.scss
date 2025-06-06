@@ -12,17 +12,6 @@
 @media screen and (max-width: 480px) {
   .slogan-text {
     font-size: 12px;
-    padding-left: 10px;
-  }
-
-  .mobile-br {
-    display: inline;
-  }
-}
-
-/* Hides the <br> tag on screens wider than 600px */
-@media screen and (min-width: 481px) {
-  .mobile-br {
-    display: none;
+    padding-left: 30px;
   }
 }
