@@ -1,6 +1,6 @@
 # biblioX
 
-This project is developed modern online library platform built with Angular, offering book search, reviews, and cart management features. It is available online at: [bibliox](https://bibliox.netlify.app/).
+This project is developed modern online library platform built with Angular, offering book search, reviews, and cart management features. It is available online at: [bibliox](https://bibliox.web.app/).
 
 ## Installation
 
